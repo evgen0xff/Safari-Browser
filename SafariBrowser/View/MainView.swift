@@ -41,23 +41,22 @@ struct MainView: View {
     var body: some View {
         ZStack {
             backgroundView
-            if viewModel.isHome {
-                HomeView(tabs: $tabs)
-            }else {
-                Pager(page: currentPage, data: tabs, id:\.id) { tab in
-                    ContentView().environmentObject(tab)
-                }
-                .preferredItemSize(pageSize)
-                .itemSpacing(10)
-                .onPageChanged{ _ in addBlankPage() }
-                .onAppear { addBlankPage() }
-                .onReceive(viewModel.$pageSize) { value in
-                    print("changed page size : ", value)
-                    withAnimation {
-                        self.pageSize = value
-                    }
+            HomeView(tabs: $tabs)
+                .opacity(viewModel.isHome ? 1 : 0)
+            Pager(page: currentPage, data: tabs, id:\.id) { tab in
+                ContentView().environmentObject(tab)
+            }
+            .preferredItemSize(pageSize)
+            .itemSpacing(10)
+            .onPageChanged{ _ in addBlankPage() }
+            .onPageWillTransition{_ in addBlankPage()}
+            .onReceive(viewModel.$pageSize) { value in
+                print("changed page size : ", value)
+                withAnimation {
+                    self.pageSize = value
                 }
             }
+            .opacity(viewModel.isHome ? 0 : 1)
         }
         .onReceive(viewModel.$currentWebModel) { current in
             if let model = current, let index = tabs.firstIndex(of: model) {

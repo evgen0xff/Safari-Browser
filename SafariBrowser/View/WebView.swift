@@ -70,6 +70,8 @@ struct WebView: UIViewRepresentable {
             let scale = cardWidth / actualWidth
 
             uiView.transform = CGAffineTransform(scaleX: scale, y: scale)
+        }else {
+            uiView.transform = CGAffineTransform(scaleX: 1, y: 1)
         }
     }
     
