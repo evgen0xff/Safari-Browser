@@ -1,2 +1,2 @@
 # Safari-Browser
-Safari-Browser in SwiftUI
+Safari-Browser in UIKit
