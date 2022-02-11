@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "WebView.setData(_:uiDelegate:navigationDelegate:):WebView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "model?.searchUrl">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "WebCollectionCell.setData(_:status:delegate:):WebCollectionCell.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "panGestureBottom">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "WebView.initializeData():WebView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "configuration">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MainVC.finishScaling():MainVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "scale">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MainVC.collectionView(_:layout:sizeForItemAt:):MainVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "status">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "WebCollectionCell.setData(_:isFullScreen:delegate:):WebCollectionCell.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.frame">
+            </PersistentString>
+            <PersistentString
+               value = "constWidth.constant">
+            </PersistentString>
+            <PersistentString
+               value = "panGesture.delegate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
