@@ -52,7 +52,6 @@ class WebView: WKWebView  {
         model?.changedUrlSubject
             .compactMap { $0 }
             .sink { [weak self] changedUrl in
-                print("Url changed: \(changedUrl)")
                 self?.isHidden = false
                 self?.load(URLRequest(url: changedUrl))
             }.store(in: &subscriptions)
@@ -71,8 +70,6 @@ class WebView: WKWebView  {
 extension WebView: WKUIDelegate {
     
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
-        print("webView runJavaScriptAlertPanelWithMessage")
-        
         completionHandler()
     }
     
@@ -83,8 +80,6 @@ extension WebView: WKNavigationDelegate {
     
     // It is called when the navigation action comes
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        print("webView decidePolicyFor navigationAction")
-
         guard let url = navigationAction.request.url else {
             decisionHandler(.cancel)
             return
@@ -97,9 +92,6 @@ extension WebView: WKNavigationDelegate {
             UIApplication.shared.open(url, options: [:])
             decisionHandler(.cancel)
         default:
-//            if model?.searchUrl != nil, model?.searchUrl.isEmpty != false {
-//                model?.searchUrl = url.absoluteString
-//            }
             decisionHandler(.allow)
         }
 
@@ -107,21 +99,12 @@ extension WebView: WKNavigationDelegate {
     
     // When searching on WebView was started
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        print("webView didStartProvisionalNavigation")
-        
-//        if let strUrl = webView.url?.absoluteString {
-//            if model?.searchUrl != nil, model?.searchUrl.isEmpty != false {
-//                model?.searchUrl = strUrl
-//            }
-//        }
-
         // Send Loading Started Event
         model?.shouldShowLoading.send(true)
         
         model?
             .webNavigationSubject
             .sink { (action: WEB_NAVIGATION) in
-                print("Action incomed : \(action)")
                 switch action {
                 case .BACK:
                     if webView.canGoBack {
@@ -139,7 +122,6 @@ extension WebView: WKNavigationDelegate {
     
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        print("webView - didCommit")
         let jscript = "var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width'); document.getElementsByTagName('head')[0].appendChild(meta);"
          webView.evaluateJavaScript(jscript)
         // Send Loading Event
@@ -148,18 +130,7 @@ extension WebView: WKNavigationDelegate {
 
     // When searching on WebView was finished
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("webView didFinish")
-        
-//        if let strUrl = webView.url?.absoluteString {
-//            if model?.searchUrl != nil, model?.searchUrl.isEmpty != false {
-//                model?.searchUrl = strUrl
-//            }
-//        }
-        
         webView.evaluateJavaScript("document.title") { (response, error) in
-            if error != nil {
-                print("An error occured")
-            }
             if let title = response as? String {
                 self.model?.webSiteTitleSubject.send(title)
             }
@@ -170,19 +141,16 @@ extension WebView: WKNavigationDelegate {
     }
     
     func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-        print("webView - webViewWebContentProcessDidTerminate")
         // Send Loading Ended Event
         model?.shouldShowLoading.send(false)
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        print("webView - didFail")
         // Send Loading Ended Event
         model?.shouldShowLoading.send(false)
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        print("webView - didFailProvisionalNavigation")
         // Send Loading Ended Event
         model?.shouldShowLoading.send(false)
     }
@@ -193,7 +161,6 @@ extension WebView: WKScriptMessageHandler {
     
     // It is called from Javascript in WebView
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        print("WKWebViewCoordinator - userContentController / message: \(message)")
     }
 }
 

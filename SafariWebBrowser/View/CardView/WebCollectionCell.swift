@@ -85,9 +85,6 @@ class WebCollectionCell: UICollectionViewCell {
     
     @objc func handlePanWeb(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self)
-        
-        print("translation : ", translation)
-
         if status == .grid {
             switch gesture.state {
             case .began:

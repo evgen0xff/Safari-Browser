@@ -27,9 +27,6 @@ class MainVC: UIViewController {
     var tabs: [WebViewModel] = [WebViewModel]()
     var currentTab: Int?
     
-//    var verticalLayout = UICollectionViewFlowLayout()
-//    var horizontalLayout = UICollectionViewFlowLayout()
-
     @Published var offsetX: CGFloat = 0
     @Published var scale: CGFloat = 0
     
@@ -75,12 +72,10 @@ class MainVC: UIViewController {
     }
     
     func willShowKeyboard (frame: CGRect) {
-        print("willShowKeyboard frame: ", frame)
         currentModel?.heightKeyboard = frame.height
     }
     
     func willHideKeyboard (){
-        print("willHideKeyboard")
         currentModel?.heightKeyboard = 0.0
     }
 
@@ -126,7 +121,6 @@ class MainVC: UIViewController {
             .removeDuplicates()
             .filter { $0 > 0.0 }
             .sink { [weak self] value in
-                print("pan trans offsetY : ", value)
                 self?.view.endEditing(true)
                 self?.status = .scalingVertical
                 self?.scaleCollectionView(scale: value)
@@ -149,10 +143,6 @@ class MainVC: UIViewController {
         colvTabs.dropDelegate = self
         colvTabs.dragInteractionEnabled = status == .grid
         
-//        verticalLayout.scrollDirection = .vertical
-//        horizontalLayout.scrollDirection = .horizontal
-//        colvTabs.collectionViewLayout = verticalLayout
-
         // Bottom
         status = .grid
     }
@@ -175,7 +165,6 @@ class MainVC: UIViewController {
             colvTabs.setCollectionViewLayout(flowLayout, animated: true)
         }
         
-//        colvTabs.setCollectionViewLayout(status == .grid ? verticalLayout : horizontalLayout, animated: true)
     }
     private func scaleCollectionView(scale: CGFloat = 1, animated: Bool = false, complete: ((Bool) -> Void)? = nil ) {
         let action = {
